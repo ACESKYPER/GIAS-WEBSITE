@@ -5,6 +5,9 @@ from app.schemas.user import UserCreate, UserResponse, LoginRequest, TokenRespon
 from app.database import get_db
 from app.security import get_password_hash, verify_password, create_access_token
 from datetime import timedelta
+from fastapi import Depends
+from app.dependencies import get_current_user
+from app.schemas.auth import Token as TokenSchema
 
 router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
 
@@ -104,4 +107,11 @@ async def login(
             last_login=user.last_login
         )
     )
+
+
+
+@router.post("/refresh", response_model=TokenSchema)
+def refresh_token(current_user=Depends(get_current_user)):
+    access_token = create_access_token(data={"sub": current_user.id})
+    return {"access_token": access_token, "token_type": "bearer"}
 

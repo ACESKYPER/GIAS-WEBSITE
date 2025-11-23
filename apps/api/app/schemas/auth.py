@@ -24,3 +24,13 @@ class Token(BaseModel):
     token_type: str = "bearer"
     refresh_token: Optional[str] = None
     expires_in: Optional[int] = None
+
+
+class RoleOut(BaseModel):
+    id: str
+    name: str
+    description: Optional[str] = None
+    permissions: Optional[str] = None
+
+    class Config:
+        orm_mode = True

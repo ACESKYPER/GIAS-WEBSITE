@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
 from app.database import Base, engine, SessionLocal
-from app.routes import attestations, evidence, auth, verification
+from app.routes import attestations, evidence, auth, verification, users, roles
 from app.routes import metadata as metadata_routes
 import os
 import subprocess
@@ -40,6 +40,8 @@ app.include_router(attestations.router)
 app.include_router(evidence.router)
 app.include_router(verification.router)
 app.include_router(metadata_routes.router)
+app.include_router(users.router)
+app.include_router(roles.router)
 
 
 @app.on_event("startup")
