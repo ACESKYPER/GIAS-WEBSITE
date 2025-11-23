@@ -1,0 +1,49 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  body {
+    @apply bg-neutral-50 text-slate-900 font-sans;
+    font-feature-settings: 'kern' 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-normal;
+  }
+
+  h1 {
+    @apply text-4xl leading-tight tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl leading-snug;
+  }
+
+  h3 {
+    @apply text-2xl leading-snug;
+  }
+}
+
+@layer components {
+  .container-max {
+    @apply max-w-7xl mx-auto px-6;
+  }
+
+  .prose-text {
+    @apply text-lg leading-relaxed text-slate-600;
+  }
+
+  .btn-primary {
+    @apply bg-blue-700 text-white px-6 py-3 font-medium hover:bg-blue-800 transition;
+  }
+
+  .btn-secondary {
+    @apply bg-slate-200 text-slate-900 px-6 py-3 font-medium hover:bg-slate-300 transition;
+  }
+
+  .card-panel {
+    @apply bg-white rounded-lg border border-slate-200 p-6 shadow-sm;
+  }
+}

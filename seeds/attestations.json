@@ -1,0 +1,69 @@
+// Sample attestation data
+[
+  {
+    "id": "GIAS-2025-001234",
+    "entity_name": "Acme AI Labs",
+    "entity_id": "org-uuid-1",
+    "standard_id": "mif-1.0",
+    "standard_name": "Model Interoperability Framework v1.0",
+    "issued_date": "2025-01-15T00:00:00Z",
+    "expiry_date": "2026-01-15T00:00:00Z",
+    "pillar_scores": {
+      "alignment": 8.5,
+      "robustness": 9.0,
+      "data_governance": 8.2,
+      "explainability": 7.8,
+      "operational_risk": 8.9
+    },
+    "overall_score": 8.5,
+    "status": "active",
+    "auditor": "Dr. Amara Okonkwo",
+    "evidence_count": 47,
+    "verification_url": "https://explorer.gias.institute/verify/GIAS-2025-001234",
+    "qr_code_url": "https://api.gias.institute/qr/GIAS-2025-001234.png"
+  },
+  {
+    "id": "GIAS-2025-001235",
+    "entity_name": "CloudML Corp",
+    "entity_id": "org-uuid-2",
+    "standard_id": "dsp-1.0",
+    "standard_name": "Data Stewardship Protocol v1.0",
+    "issued_date": "2025-01-20T00:00:00Z",
+    "expiry_date": "2026-01-20T00:00:00Z",
+    "pillar_scores": {
+      "alignment": 9.2,
+      "robustness": 8.8,
+      "data_governance": 9.5,
+      "explainability": 8.9,
+      "operational_risk": 9.1
+    },
+    "overall_score": 9.1,
+    "status": "active",
+    "auditor": "James Mitchell",
+    "evidence_count": 52,
+    "verification_url": "https://explorer.gias.institute/verify/GIAS-2025-001235",
+    "qr_code_url": "https://api.gias.institute/qr/GIAS-2025-001235.png"
+  },
+  {
+    "id": "GIAS-2025-001236",
+    "entity_name": "DataGuard Systems",
+    "entity_id": "org-uuid-3",
+    "standard_id": "rte-1.0",
+    "standard_name": "Risk & Threat Evaluation v1.0",
+    "issued_date": "2025-02-01T00:00:00Z",
+    "expiry_date": "2026-02-01T00:00:00Z",
+    "pillar_scores": {
+      "alignment": 7.5,
+      "robustness": 8.2,
+      "data_governance": 7.8,
+      "explainability": 7.2,
+      "operational_risk": 8.1
+    },
+    "overall_score": 7.8,
+    "status": "active",
+    "auditor": "Robert Thorne",
+    "evidence_count": 38,
+    "verification_url": "https://explorer.gias.institute/verify/GIAS-2025-001236",
+    "qr_code_url": "https://api.gias.institute/qr/GIAS-2025-001236.png"
+  }
+]

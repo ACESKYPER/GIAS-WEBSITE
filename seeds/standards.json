@@ -1,0 +1,199 @@
+// GIAS Standards Definitions
+[
+  {
+    "id": "mif-1.0",
+    "name": "Model Interoperability Framework",
+    "abbreviation": "MIF",
+    "version": "1.0.0",
+    "release_date": "2025-01-15",
+    "status": "active",
+    "description": "Defines interfaces, protocols, and deployment specifications for AI models operating across heterogeneous platforms and infrastructure.",
+    "pillars": [
+      "alignment",
+      "robustness",
+      "data_governance",
+      "explainability",
+      "operational_risk"
+    ],
+    "key_sections": [
+      {
+        "number": "1",
+        "title": "Model Packaging & Containerization",
+        "topics": [
+          "ONNX and PyTorch model formats",
+          "Container specifications",
+          "Resource requirements"
+        ]
+      },
+      {
+        "number": "2",
+        "title": "Inference Protocols",
+        "topics": [
+          "gRPC vs REST trade-offs",
+          "Input/output schemas",
+          "Error handling"
+        ]
+      },
+      {
+        "number": "3",
+        "title": "Monitoring & Observability",
+        "topics": [
+          "Latency SLAs",
+          "Model drift detection",
+          "Health check endpoints"
+        ]
+      }
+    ],
+    "compliance_requirements": 25,
+    "evidence_types": [
+      "model_card",
+      "benchmark_results",
+      "deployment_guide",
+      "audit_report"
+    ],
+    "download_url": "https://standards.gias.institute/mif/1.0/mif-1.0.pdf"
+  },
+  {
+    "id": "dsp-1.0",
+    "name": "Data Stewardship Protocol",
+    "abbreviation": "DSP",
+    "version": "1.0.0",
+    "release_date": "2025-02-01",
+    "status": "active",
+    "description": "Establishes data provenance, licensing clarity, privacy controls, and governance requirements for training and operational data.",
+    "pillars": [
+      "data_governance",
+      "alignment",
+      "operational_risk"
+    ],
+    "key_sections": [
+      {
+        "number": "1",
+        "title": "Data Provenance & Tracking",
+        "topics": [
+          "Data lineage documentation",
+          "Source attribution",
+          "Modification history"
+        ]
+      },
+      {
+        "number": "2",
+        "title": "Licensing & Rights Management",
+        "topics": [
+          "License compatibility matrix",
+          "Attribution requirements",
+          "Derivative works"
+        ]
+      },
+      {
+        "number": "3",
+        "title": "Privacy & Redaction",
+        "topics": [
+          "PII handling",
+          "GDPR compliance",
+          "Differential privacy"
+        ]
+      }
+    ],
+    "compliance_requirements": 18,
+    "evidence_types": [
+      "data_inventory",
+      "licensing_agreement",
+      "privacy_assessment",
+      "gdpr_dpia"
+    ],
+    "download_url": "https://standards.gias.institute/dsp/1.0/dsp-1.0.pdf"
+  },
+  {
+    "id": "tl-0.9",
+    "name": "Transparency & Labeling",
+    "abbreviation": "TL",
+    "version": "0.9.0",
+    "release_date": "2025-01-20",
+    "status": "proposed",
+    "description": "Standards for model cards, system documentation, capability disclosure, and failure mode documentation.",
+    "pillars": [
+      "explainability",
+      "alignment"
+    ],
+    "key_sections": [
+      {
+        "number": "1",
+        "title": "Model Cards",
+        "topics": [
+          "Model details",
+          "Intended use",
+          "Performance metrics"
+        ]
+      }
+    ],
+    "compliance_requirements": 12,
+    "evidence_types": [
+      "model_card",
+      "capability_document",
+      "limitations_analysis"
+    ],
+    "download_url": "https://standards.gias.institute/tl/0.9/tl-0.9.pdf"
+  },
+  {
+    "id": "rte-1.0",
+    "name": "Risk & Threat Evaluation",
+    "abbreviation": "RTE",
+    "version": "1.0.0",
+    "release_date": "2025-02-10",
+    "status": "active",
+    "description": "Methodology for adversarial robustness testing, edge-case identification, and failure mode analysis.",
+    "pillars": [
+      "robustness",
+      "operational_risk"
+    ],
+    "key_sections": [
+      {
+        "number": "1",
+        "title": "Adversarial Testing Framework",
+        "topics": [
+          "FGSM attacks",
+          "Transferability assessment",
+          "Certified robustness"
+        ]
+      }
+    ],
+    "compliance_requirements": 22,
+    "evidence_types": [
+      "test_results",
+      "threat_model",
+      "mitigation_strategies"
+    ],
+    "download_url": "https://standards.gias.institute/rte/1.0/rte-1.0.pdf"
+  },
+  {
+    "id": "pol-0.8",
+    "name": "Policy & Operational Lifecycle",
+    "abbreviation": "POL",
+    "version": "0.8.0",
+    "release_date": "2024-12-01",
+    "status": "draft",
+    "description": "Operational procedures, update protocols, deprecation timelines, and discontinuation requirements.",
+    "pillars": [
+      "operational_risk"
+    ],
+    "key_sections": [
+      {
+        "number": "1",
+        "title": "Model Lifecycle",
+        "topics": [
+          "Development phase",
+          "Deployment phase",
+          "Retirement phase"
+        ]
+      }
+    ],
+    "compliance_requirements": 15,
+    "evidence_types": [
+      "ops_manual",
+      "update_plan",
+      "decommission_guide"
+    ],
+    "download_url": "https://standards.gias.institute/pol/0.8/pol-0.8.pdf"
+  }
+]
