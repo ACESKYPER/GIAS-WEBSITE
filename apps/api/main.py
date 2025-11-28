@@ -1,20 +1,26 @@
+# apps/api/main.py
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
-from app.database import Base, engine, SessionLocal
-from app.routes import attestations, evidence, auth, verification, users, roles
-from app.routes import metadata as metadata_routes
+
+# IMPORTANT: import the async engine (created in your app.database)
+from app.database import async_engine  # <- using async engine
+from app.routes import (
+    attestations, evidence, auth, verification,
+    users, roles, metadata as metadata_routes
+)
+
 import os
 import subprocess
+import logging
 from alembic.config import Config as AlembicConfig
 from alembic.script import ScriptDirectory
 from sqlalchemy import text
-import logging
 
 logger = logging.getLogger(__name__)
 
-# Import models to ensure they're registered with SQLAlchemy
-import app.models.user as models_user
+# Ensure SQLAlchemy models load so Alembic / metadata are registered
+import app.models.user  # noqa: F401
 
 settings = get_settings()
 
@@ -25,7 +31,7 @@ app = FastAPI(
     openapi_url="/api/openapi.json"
 )
 
-# CORS Middleware
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,
@@ -46,12 +52,9 @@ app.include_router(roles.router)
 
 @app.on_event("startup")
 async def startup_event():
-    """Pre-start checks: ensure migrations applied and cache git revision.
+    """Async startup checks: ensure alembic head == db revision, cache git commit."""
 
-    This prevents the server from starting against an unexpected schema.
-    Seeding is intentionally removed from startup and moved to a separate script.
-    """
-    # Resolve alembic head
+    # Resolve alembic head (file-based)
     try:
         alembic_ini = os.path.join(os.path.dirname(__file__), "alembic.ini")
         alembic_cfg = AlembicConfig(alembic_ini)
@@ -61,18 +64,25 @@ async def startup_event():
     except Exception:
         head = None
 
-    # Read DB revision
+    # Read DB revision using the async engine
     db_rev = None
     try:
-        with engine.connect() as conn:
+        # Ensure the DATABASE_URL uses async driver, e.g. postgresql+asyncpg://user:pass@host:port/db
+        async with async_engine.connect() as conn:
             try:
-                res = conn.execute(text("SELECT version_num FROM alembic_version"))
-                db_rev = res.scalar()
+                result = await conn.execute(text("SELECT version_num FROM alembic_version"))
+                # Async Result -> scalar() will return the first column of the first row (or None)
+                db_rev = result.scalar()
             except Exception:
                 db_rev = None
     except Exception as e:
         logger.error("Database connection failed during startup check: %s", e)
-        raise
+        # Provide extra hint for the common misconfiguration (sync vs async driver)
+        raise RuntimeError(
+            "Unable to connect to database during startup. "
+            "Ensure DATABASE_URL uses the async driver (e.g. postgresql+asyncpg://...) and "
+            "that asyncpg is installed in the environment."
+        ) from e
 
     # Enforce migration parity
     if head is None:
@@ -83,13 +93,16 @@ async def startup_event():
             logger.error(msg)
             raise RuntimeError(msg)
 
-    # Cache revision and commit for use in middleware/endpoints
+    # store revision & commit for middleware/endpoints
     app.state.migration_revision = db_rev or "unknown"
-    # attempt to get git commit (short)
+
     commit = None
     try:
-        # try multiple likely repo roots
-        candidates = [os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")), os.path.abspath(os.path.join(os.path.dirname(__file__), "..")), os.getcwd()]
+        candidates = [
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..")),
+            os.getcwd()
+        ]
         for c in candidates:
             try:
                 commit = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=c, stderr=subprocess.DEVNULL).decode().strip()
@@ -104,26 +117,19 @@ async def startup_event():
 
 
 @app.middleware("http")
-async def add_version_headers(request, call_next):
-    """Add app/migration version headers and log each request with revision info."""
+async def add_version_headers(request: Request, call_next):
     try:
         resp = await call_next(request)
         # Add headers
         resp.headers["X-App-Version"] = settings.API_VERSION
         resp.headers["X-DB-Revision"] = getattr(app.state, "migration_revision", "unknown")
-    except Exception as e:
-        logger.exception("Error in middleware: %s", e)
-        raise
+        return resp
     finally:
-        # Log request with revision info
         logger.info("%s %s - app=%s db_rev=%s", request.method, request.url.path, settings.API_VERSION, getattr(app.state, "migration_revision", "unknown"))
-    
-    return resp
 
 
 @app.get("/health")
 async def health_check(request: Request):
-    """Health check endpoint."""
     return {
         "status": "ok",
         "database": "connected",
@@ -133,7 +139,6 @@ async def health_check(request: Request):
 
 @app.get("/")
 async def root():
-    """API root endpoint."""
     return {
         "title": settings.API_TITLE,
         "version": settings.API_VERSION,
