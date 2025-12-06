@@ -31,8 +31,8 @@ declare namespace __next_route_internal_types__ {
   type StaticRoutes = 
     | `/`
     | `/explorer`
-    | `/governance`
     | `/standards`
+    | `/governance`
   type DynamicRoutes<T extends string = string> = 
     | `/docs/${OptionalCatchAllSlug<T>}`
 
