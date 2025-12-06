@@ -1,24 +1,64 @@
+# Environment variables
+.env
 .env.local
+.env.*.local
 .env.prod
+.env.production
 .env.test
 
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Node modules
 node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build outputs
 dist/
 build/
-*.egg-info/
+.next/
+out/
+
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
 .pytest_cache/
+*.egg-info/
+*.egg
 
-.DS_Store
-*.log
-
-.vscode/settings.json
+# IDE & Editor
+.vscode/
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
 
-docker-compose.override.yml
+# Logs
+*.log
+logs/
 
 # AWS credentials
 ~/.aws/credentials
+aws-credentials.txt
 
 # Terraform
 *.tfstate
@@ -26,13 +66,15 @@ docker-compose.override.yml
 .terraform/
 .terraform.lock.hcl
 
-# IDE
-*.swp
-*.swo
-*~
-.vscode/
-.idea/
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Git
+.git/
+.gitignore
 
 # OS
-Thumbs.db
 .DS_Store
+Thumbs.db
+*.lnk

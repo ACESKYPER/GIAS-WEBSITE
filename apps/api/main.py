@@ -24,16 +24,17 @@ app.add_middleware(
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint."""
+    """Health check endpoint for deployment monitoring."""
     return {
         "status": "ok",
         "version": settings.API_VERSION,
+        "environment": "production" if not settings.DEBUG else "development",
     }
 
 
 @app.get("/")
 async def root():
-    """Root endpoint."""
+    """Root endpoint - API information."""
     return {
         "title": settings.API_TITLE,
         "version": settings.API_VERSION,
@@ -43,4 +44,8 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000,
+    )
