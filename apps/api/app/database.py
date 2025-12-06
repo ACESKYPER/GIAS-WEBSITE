@@ -1,7 +1,7 @@
 """Database configuration and session management."""
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base
-from apps.api.app.config import get_settings
+from .config import get_settings
 
 settings = get_settings()
 
