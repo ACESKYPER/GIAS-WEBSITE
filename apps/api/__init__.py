@@ -1,1 +1,0 @@
-"""GIAS API application."""
