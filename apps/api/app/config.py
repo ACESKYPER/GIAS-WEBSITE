@@ -1,10 +1,13 @@
 """Configuration management for GIAS API."""
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 from functools import lru_cache
 
 
 class Settings(BaseSettings):
     """Application settings loaded from environment or .env file."""
+    
+    model_config = ConfigDict(env_file=".env")
     
     # API Configuration
     API_TITLE: str = "GIAS Institutional Website & Trust Portal"
@@ -24,9 +27,6 @@ class Settings(BaseSettings):
     
     # CORS
     ALLOWED_ORIGINS: list = ["http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173"]
-    
-    class Config:
-        env_file = ".env"
 
 
 @lru_cache()
