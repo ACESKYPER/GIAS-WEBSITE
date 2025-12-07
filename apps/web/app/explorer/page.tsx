@@ -1,29 +1,25 @@
-export default function ExplorerPage(){
-  return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-2xl font-serif text-slate-900">Attestation Explorer</h1>
-      <p className="text-sm text-slate-600 mt-2">Search and verify attestations issued by GIAS.</p>
-
-      <div className="mt-6 bg-white border rounded p-6">
-        <label className="block text-sm text-slate-700">Attestation ID</label>
-        <div className="flex gap-2 mt-2">
-          <input className="flex-1 border p-2" placeholder="GIAS-2025-001234" />
-          <button className="bg-slate-800 text-white px-4 py-2 rounded">Lookup</button>
-        </div>
-      </div>
-    </div>
-  )
-}
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import QRCode from 'qrcode.react'
+
+const QRCode = dynamic(() => import('qrcode.react').then(mod => ({ default: mod.QRCodeCanvas })), { ssr: false })
+
+interface Attestation {
+  id: string
+  entity: string
+  standard: string
+  issuedDate: string
+  expiryDate: string
+  score: number
+  status: string
+}
 
 export default function ExplorerPage() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedAttestation, setSelectedAttestation] = useState(null)
+  const [selectedAttestation, setSelectedAttestation] = useState<Attestation | null>(null)
 
   // Mock attestations
   const mockAttestations = [

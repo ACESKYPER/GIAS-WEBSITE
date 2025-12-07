@@ -1,19 +1,3 @@
-export default function GovernancePage(){
-  return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-2xl font-serif text-slate-900">Governance</h1>
-      <p className="text-sm text-slate-600 mt-2">Council members, minutes, policies and conflict-of-interest disclosures.</p>
-
-      <div className="mt-6 bg-white border rounded p-6">
-        <h2 className="font-medium">GIAS Council</h2>
-        <ul className="mt-3 text-sm text-slate-700">
-          <li>Dr. Amara Okonkwo — Chair</li>
-          <li>Prof. Elias Marten — Member</li>
-        </ul>
-      </div>
-    </div>
-  )
-}
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 

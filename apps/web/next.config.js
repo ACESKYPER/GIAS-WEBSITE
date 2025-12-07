@@ -5,7 +5,7 @@ const nextConfig = {
     tsconfigPath: './tsconfig.json',
   },
   experimental: {
-    typedRoutes: true,
+    typedRoutes: false,
   },
   redirects: async () => {
     return [
