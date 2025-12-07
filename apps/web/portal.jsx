@@ -11,7 +11,8 @@ export default function Portal() {
     setResult(null)
     if (!attId) return setError('Enter an attestation id')
     try {
-      const res = await fetch(`http://localhost:8000/verify/${attId}`)
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+      const res = await fetch(`${apiUrl}/verify/${attId}`)
       if (!res.ok) throw new Error(`Status ${res.status}`)
       const json = await res.json()
       setResult(json)
