@@ -2,8 +2,6 @@
 
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 const QRCode = dynamic(() => import('qrcode.react').then(mod => ({ default: mod.QRCodeCanvas })), { ssr: false })
 
@@ -58,10 +56,8 @@ export default function ExplorerPage() {
   )
 
   return (
-    <>
-      <Header />
-      <main>
-        <section className="bg-white border-b border-slate-200">
+    <div>
+      <section className="bg-white border-b border-slate-200">
           <div className="container-max py-16">
             <h1 className="text-5xl mb-4">Attestation Explorer</h1>
             <p className="prose-text">
@@ -151,8 +147,6 @@ export default function ExplorerPage() {
             </div>
           )}
         </section>
-      </main>
-      <Footer />
-    </>
-  )
-}
+      </div>
+    )
+  }

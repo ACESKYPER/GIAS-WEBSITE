@@ -1,5 +1,3 @@
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 export default function CertificationPage() {
@@ -31,10 +29,8 @@ export default function CertificationPage() {
   ]
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen">
-        <section className="bg-white border-b border-slate-200">
+    <div className="min-h-screen">
+      <section className="bg-white border-b border-slate-200">
           <div className="container-max py-24">
             <h1 className="text-5xl font-serif mb-6">GIAS Certification Programs</h1>
             <p className="prose-text max-w-3xl">
@@ -117,8 +113,6 @@ export default function CertificationPage() {
             </a>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
-  )
-}
+      </div>
+    )
+  }

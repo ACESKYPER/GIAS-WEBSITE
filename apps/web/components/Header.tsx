@@ -19,11 +19,11 @@ export default function Header() {
           <Link href="/governance" className="hover:text-slate-900 transition">Governance</Link>
           <Link href="/explorer" className="hover:text-slate-900 transition">Explorer</Link>
           <Link href="/legal" className="hover:text-slate-900 transition">Legal</Link>
+          <Link href="/portal" className="hover:text-slate-900 transition">Portal</Link>
         </nav>
 
         <div className="flex gap-4">
-          <Link href="https://portal.gias.institute" className="px-3 py-1 border rounded text-sm text-slate-800">Portal</Link>
-          <Link href="/contact" className="px-3 py-1 bg-slate-800 text-white rounded text-sm">Contact</Link>
+          <a href="https://portal.gias.institute" className="px-3 py-1 border rounded text-sm text-slate-800">External Portal</a>
         </div>
       </div>
     </header>

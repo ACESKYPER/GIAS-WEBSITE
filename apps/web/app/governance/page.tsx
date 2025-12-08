@@ -1,6 +1,3 @@
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-
 export default function GovernancePage() {
   const councilMembers = [
     { name: 'Dr. Sarah Chen', role: 'Chair', affiliation: 'AI Research Consortium' },
@@ -12,10 +9,8 @@ export default function GovernancePage() {
   ]
 
   return (
-    <>
-      <Header />
-      <main>
-        <section className="bg-white border-b border-slate-200">
+    <div>
+      <section className="bg-white border-b border-slate-200">
           <div className="container-max py-16">
             <h1 className="text-5xl mb-4">Governance</h1>
             <p className="prose-text">
@@ -46,8 +41,6 @@ export default function GovernancePage() {
             </a>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
-  )
-}
+      </div>
+    )
+  }

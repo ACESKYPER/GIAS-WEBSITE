@@ -1,6 +1,3 @@
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-
 export default function StandardsPage() {
   const standards = [
     { id: 'mif', title: 'Model Interoperability Framework (MIF)', version: '1.0.0', released: '2025-01-15', description: 'Defines interfaces and protocols for AI model deployment across heterogeneous platforms.', status: 'Active' },
@@ -9,10 +6,8 @@ export default function StandardsPage() {
   ]
 
   return (
-    <>
-      <Header />
-      <main>
-        <section className="bg-white border-b border-slate-200">
+    <div>
+      <section className="bg-white border-b border-slate-200">
           <div className="container-max py-16">
             <h1 className="text-4xl md:text-5xl mb-4">GIAS Standards</h1>
             <p className="text-slate-600 max-w-3xl">Institutional standards for AI interoperability, governance, and certification.</p>
@@ -45,8 +40,6 @@ export default function StandardsPage() {
             <a href="#changelog" className="text-blue-700 hover:text-blue-800 font-medium mt-4 inline-block">View Changelog →</a>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
-  )
-}
+      </div>
+    )
+  }

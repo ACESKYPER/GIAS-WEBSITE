@@ -1,6 +1,8 @@
+import Link from 'next/link'
+
 export default function Home() {
   return (
-    <main>
+    <div>
       {/* Hero Section */}
       <section className="bg-white border-b border-slate-200">
         <div className="container-max py-24">
@@ -10,8 +12,8 @@ export default function Home() {
               GIAS provides institutional governance, standards, and certification frameworks for AI systems operating across borders. Our five-pillar methodology ensures alignment, robustness, data governance, explainability, and operational risk mitigation.
             </p>
             <div className="flex gap-4">
-              <a href="/standards" className="btn-primary inline-block">Explore Standards</a>
-              <a href="/governance" className="btn-secondary inline-block">Learn More</a>
+              <Link href="/standards" className="btn-primary inline-block">Explore Standards</Link>
+              <Link href="/governance" className="btn-secondary inline-block">Learn More</Link>
             </div>
           </div>
         </div>
@@ -50,6 +52,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

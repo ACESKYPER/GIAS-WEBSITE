@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export default function PortalPage() {
   const [role, setRole] = useState('enterprise')
@@ -26,9 +24,7 @@ export default function PortalPage() {
   }
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-gray-50 text-slate-800 font-sans">
+    <div className="min-h-screen bg-gray-50 text-slate-800 font-sans">
         <header className="max-w-4xl mx-auto py-8 px-4">
           <div className="flex items-center justify-between">
             <div>
@@ -97,11 +93,10 @@ export default function PortalPage() {
           </section>
         </section>
 
+
         <footer className="max-w-4xl mx-auto py-6 px-4 text-xs text-slate-500">
           GIAS — Global Interoperability & AI Standards Institute
         </footer>
-      </main>
-      <Footer />
-    </>
-  )
-}
+      </div>
+    )
+  }
