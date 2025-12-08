@@ -7,6 +7,8 @@ const nextConfig = {
   experimental: {
     typedRoutes: false,
   },
+  output: 'standalone',
+  trailingSlash: false,
   redirects: async () => {
     return [
       {
