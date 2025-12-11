@@ -2,96 +2,115 @@
 Authentication API routes.
 """
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import HTTPBearer
+from fastapi import APIRouter, HTTPException, status
 from jose import JWTError, jwt
 import json
 import os
+from uuid import uuid4
+from passlib.context import CryptContext
 
 from app.models.auth import (
     LoginRequest,
-    LoginResponse,
     UserRole,
 )
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
-# Demo users for MVP
-DEMO_USERS = {
-    "enterprise@example.com": {
-        "id": "user-001",
-        "password": "password123",
-        "name": "Enterprise User",
-        "role": UserRole.ENTERPRISE,
-    },
-    "auditor@example.com": {
-        "id": "user-002",
-        "password": "password123",
-        "name": "Auditor User",
-        "role": UserRole.AUDITOR,
-    },
-    "admin@example.com": {
-        "id": "user-003",
-        "password": "password123",
-        "name": "Admin User",
-        "role": UserRole.ADMIN,
-    },
-}
+# Password hashing
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+USERS_FILE = os.path.join(os.path.dirname(__file__), '..', 'users.json')
 
 JWT_SECRET = os.getenv("JWT_SECRET", "your-secret-key-min-32-chars-required")
 JWT_ALGORITHM = "HS256"
-JWT_EXPIRATION_HOURS = 24
+JWT_EXPIRATION_HOURS = int(os.getenv("JWT_EXPIRATION_HOURS", "24"))
+REFRESH_EXPIRATION_DAYS = int(os.getenv("REFRESH_EXPIRATION_DAYS", "30"))
 
-def create_access_token(user_id: str, email: str, role: UserRole) -> str:
-    """Create JWT access token."""
-    expires = datetime.utcnow() + timedelta(hours=JWT_EXPIRATION_HOURS)
+
+def load_users():
+    """Load users from users.json if present, otherwise return an empty dict."""
+    try:
+        path = os.path.abspath(USERS_FILE)
+        if os.path.exists(path):
+            with open(path, 'r', encoding='utf-8') as fh:
+                return json.load(fh)
+    except Exception:
+        pass
+    return {}
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    try:
+        return pwd_context.verify(plain_password, hashed_password)
+    except Exception:
+        return False
+
+
+def create_access_token(user_id: str, email: str, role: str, hours: int = None) -> str:
+    if hours is None:
+        hours = JWT_EXPIRATION_HOURS
+    expires = datetime.utcnow() + timedelta(hours=hours)
     payload = {
         "sub": user_id,
         "email": email,
-        "role": role.value,
-        "exp": expires,
+        "role": role,
+        "exp": expires.timestamp(),
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return token
 
-@router.post("/login", response_model=LoginResponse)
-async def login(request: LoginRequest):
-    """
-    Authenticate user and return JWT token.
-    Demo: Use provided demo credentials.
-    """
-    user = DEMO_USERS.get(request.email)
 
-    if not user or user["password"] != request.password:
+def create_refresh_token(user_id: str, email: str, role: str) -> str:
+    expires = datetime.utcnow() + timedelta(days=REFRESH_EXPIRATION_DAYS)
+    payload = {
+        "sub": user_id,
+        "email": email,
+        "role": role,
+        "exp": expires.timestamp(),
+    }
+    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+
+@router.post("/login")
+async def login(request: LoginRequest):
+    """Authenticate user and return access + refresh tokens and user info."""
+    users = load_users()
+    user = users.get(request.email.lower())
+
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password",
         )
 
-    # Create JWT token
-    token = create_access_token(user["id"], request.email, user["role"])
+    if not verify_password(request.password, user.get("hashed_password", "")):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password",
+        )
 
-    return LoginResponse(
-        user_id=user["id"],
-        email=request.email,
-        name=user["name"],
-        role=user["role"],
-        access_token=token,
-    )
+    access = create_access_token(user["id"], request.email, user["role"])
+    refresh = create_refresh_token(user["id"], request.email, user["role"])
+
+    return {
+        "access_token": access,
+        "refresh_token": refresh,
+        "user": {
+            "id": user["id"],
+            "email": request.email,
+            "role": user["role"],
+            "name": user.get("name"),
+        },
+    }
+
 
 @router.post("/logout")
 async def logout():
-    """
-    Logout endpoint (client should clear token).
-    """
     return {"message": "Logged out successfully"}
+
 
 @router.get("/me")
 async def get_current_user(authorization: str = None):
-    """
-    Get current authenticated user info.
-    Requires Bearer token in Authorization header.
-    """
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -99,7 +118,6 @@ async def get_current_user(authorization: str = None):
         )
 
     token = authorization.replace("Bearer ", "")
-
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         user_id = payload.get("sub")

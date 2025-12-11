@@ -5,7 +5,7 @@
 import { useAuth } from '@/lib/hooks/useAuth'
 import type { EvidenceBundle, ValidationResult, CertificationScore, Attestation, AttestationVerification } from '@/types/certification'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || ''
 
 /**
  * Make authenticated API request with JWT token
@@ -28,6 +28,7 @@ async function apiRequest<T>(
     headers['Authorization'] = `Bearer ${token}`
   }
 
+  if (!API_URL) throw new Error('NEXT_PUBLIC_API_URL is not set')
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers,

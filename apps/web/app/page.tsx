@@ -47,9 +47,9 @@ export default function Home() {
           <p className="prose-text text-slate-300 mb-8">
             Join leading enterprises in building AI systems that meet global standards.
           </p>
-          <a href="https://portal.gias.institute" className="bg-white text-slate-900 px-8 py-3 font-medium hover:bg-slate-100 transition inline-block">
+          <Link href="/portal" className="bg-white text-slate-900 px-8 py-3 font-medium hover:bg-slate-100 transition inline-block">
             Access Portal
-          </a>
+          </Link>
         </div>
       </section>
     </div>

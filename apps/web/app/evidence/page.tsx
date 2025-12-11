@@ -1,11 +1,12 @@
-'use client'
+"use client"
 
 import { useAuth } from '@/lib/hooks/useAuth'
-import { RoleGate } from '@/lib/hooks/withProtectedRoute'
+import { RoleGate } from '@/lib/withProtectedRoute'
+import withProtectedRoute from '@/lib/withProtectedRoute'
 import { EvidenceUpload } from '@/components/EvidenceUpload'
 import Link from 'next/link'
 
-export default function EvidencePage() {
+function EvidencePage() {
   const { isLoading } = useAuth()
 
   if (isLoading) {
@@ -121,3 +122,5 @@ export default function EvidencePage() {
     </div>
   )
 }
+
+export default withProtectedRoute(EvidencePage)

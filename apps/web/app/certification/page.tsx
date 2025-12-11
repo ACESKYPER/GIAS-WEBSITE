@@ -1,6 +1,9 @@
-import Link from 'next/link'
+"use client"
 
-export default function CertificationPage() {
+import Link from 'next/link'
+import withProtectedRoute from '@/lib/withProtectedRoute'
+
+function CertificationPage() {
   const certifications = [
     {
       id: 'mif-core',
@@ -108,11 +111,13 @@ export default function CertificationPage() {
             <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
               Join leading organizations that have certified their AI systems with GIAS.
             </p>
-            <a href="https://portal.gias.institute" className="inline-block px-8 py-3 bg-white text-slate-900 font-medium rounded hover:bg-slate-100 transition">
+            <Link href="/portal" className="inline-block px-8 py-3 bg-white text-slate-900 font-medium rounded hover:bg-slate-100 transition">
               Apply Now
-            </a>
+            </Link>
           </div>
         </section>
       </div>
     )
   }
+
+  export default withProtectedRoute(CertificationPage)

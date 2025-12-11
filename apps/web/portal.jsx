@@ -11,8 +11,9 @@ export default function Portal() {
     setResult(null)
     if (!attId) return setError('Enter an attestation id')
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-      const res = await fetch(`${apiUrl}/verify/${attId}`)
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      if (!apiUrl) throw new Error('NEXT_PUBLIC_API_URL not set')
+      const res = await fetch(`${apiUrl}/api/verify/${attId}`)
       if (!res.ok) throw new Error(`Status ${res.status}`)
       const json = await res.json()
       setResult(json)
@@ -23,8 +24,8 @@ export default function Portal() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-slate-800 font-sans">
-      <header className="max-w-4xl mx-auto py-8 px-4">
-        <div className="flex items-center justify-between">
+      <main className="max-w-4xl mx-auto px-4 py-8">
+        <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl font-serif text-slate-900">GIAS Portal</h1>
             <p className="text-sm text-slate-600">Institutional portal — Moody's-style look</p>
@@ -36,9 +37,6 @@ export default function Portal() {
             </select>
           </div>
         </div>
-      </header>
-
-      <main className="max-w-4xl mx-auto px-4">
         <section className="bg-white shadow rounded p-6">
           <h2 className="text-xl font-semibold font-serif">Attestation Lookup</h2>
           <p className="text-sm text-slate-600 mb-4">Public verification lookup for attestations.</p>

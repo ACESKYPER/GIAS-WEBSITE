@@ -13,8 +13,8 @@ export default function NotFound() {
           <Link href="/" className="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800 transition">
             Home
           </Link>
-          <Link href="/standards" className="px-6 py-2 border border-slate-300 rounded hover:bg-slate-50 transition">
-            Standards
+          <Link href="/portal" className="px-6 py-2 border border-slate-300 rounded hover:bg-slate-50 transition">
+            Portal
           </Link>
         </div>
       </div>

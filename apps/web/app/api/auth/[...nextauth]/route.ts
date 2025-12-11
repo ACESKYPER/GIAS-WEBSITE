@@ -1,10 +1,5 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { jwtVerify } from 'jose'
-
-const secret = new TextEncoder().encode(
-  process.env.NEXTAUTH_SECRET || 'your-secret-key-min-32-chars-required'
-)
 
 const authOptions = {
   providers: [
@@ -20,9 +15,11 @@ const authOptions = {
         }
 
         // Call backend API to authenticate
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL
+        if (!apiUrl) throw new Error('NEXT_PUBLIC_API_URL not set')
         try {
-          const response = await fetch(`${apiUrl}/api/auth/login`, {
+          // Call backend public auth endpoint at /auth/login (proxy on backend)
+          const response = await fetch(`${apiUrl}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -37,13 +34,16 @@ const authOptions = {
 
           const data = await response.json()
 
-          // Return user object with JWT token and role
+          // Backend returns: { access_token, refresh_token, user: { id, email, role } }
+          const user = data.user || {}
+
           return {
-            id: data.user_id,
-            email: data.email,
-            name: data.name || data.email,
-            role: data.role, // 'Enterprise', 'Auditor', 'Regulator', 'Admin'
-            token: data.access_token,
+            id: user.id,
+            email: user.email,
+            name: user.name || user.email,
+            role: user.role,
+            access: data.access_token,
+            refresh: data.refresh_token,
           }
         } catch (error) {
           throw new Error('Authentication failed')
@@ -57,7 +57,8 @@ const authOptions = {
         token.id = user.id
         token.email = user.email
         token.role = user.role
-        token.accessToken = user.token
+        token.accessToken = user.access
+        token.refreshToken = user.refresh
       }
       return token
     },
@@ -66,6 +67,7 @@ const authOptions = {
         session.user.id = token.id as string
         session.user.role = token.role as string
         session.accessToken = token.accessToken as string
+        session.refreshToken = token.refreshToken as string
       }
       return session
     },
@@ -76,11 +78,11 @@ const authOptions = {
   },
   session: {
     strategy: 'jwt' as const,
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 60 * 60 * 24 * 7,
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
-    maxAge: 24 * 60 * 60,
+    maxAge: 60 * 60 * 24 * 7, // 7 days
   },
   secret: process.env.NEXTAUTH_SECRET,
 }

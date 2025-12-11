@@ -1,13 +1,14 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { RoleGate } from '@/lib/hooks/withProtectedRoute'
+import { RoleGate } from '@/lib/withProtectedRoute'
+import withProtectedRoute from '@/lib/withProtectedRoute'
 import { useGiasApi } from '@/lib/api/gias'
 import type { Attestation } from '@/types/certification'
 
-export default function DashboardPage() {
+function DashboardPage() {
   const { user, isLoading } = useAuth()
   const api = useGiasApi()
   const [attestations, setAttestations] = useState<Attestation[]>([])
@@ -158,3 +159,5 @@ export default function DashboardPage() {
     </div>
   )
 }
+
+export default withProtectedRoute(DashboardPage)

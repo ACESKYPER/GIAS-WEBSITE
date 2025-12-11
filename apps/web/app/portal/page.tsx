@@ -1,8 +1,9 @@
-'use client'
+"use client"
 
 import { useState } from 'react'
+import withProtectedRoute from '@/lib/withProtectedRoute'
 
-export default function PortalPage() {
+function PortalPage() {
   const [role, setRole] = useState('enterprise')
   const [attId, setAttId] = useState('')
   const [result, setResult] = useState<any>(null)
@@ -13,8 +14,9 @@ export default function PortalPage() {
     setResult(null)
     if (!attId) return setError('Enter an attestation id')
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-      const res = await fetch(`${apiUrl}/verify/${attId}`)
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      if (!apiUrl) throw new Error('NEXT_PUBLIC_API_URL not set')
+      const res = await fetch(`${apiUrl}/api/verify/${attId}`)
       if (!res.ok) throw new Error(`Status ${res.status}`)
       const json = await res.json()
       setResult(json)
@@ -25,8 +27,8 @@ export default function PortalPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-slate-800 font-sans">
-        <header className="max-w-4xl mx-auto py-8 px-4">
-          <div className="flex items-center justify-between">
+        <section className="max-w-4xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-serif text-slate-900">GIAS Portal</h1>
               <p className="text-sm text-slate-600">Institutional portal — Moody&apos;s-style look</p>
@@ -38,9 +40,9 @@ export default function PortalPage() {
               </select>
             </div>
           </div>
-        </header>
+        </section>
 
-        <section className="max-w-4xl mx-auto px-4">
+        <main className="max-w-4xl mx-auto px-4">
           <div className="bg-white shadow rounded p-6">
             <h2 className="text-xl font-semibold font-serif">Attestation Lookup</h2>
             <p className="text-sm text-slate-600 mb-4">Public verification lookup for attestations.</p>
@@ -91,12 +93,10 @@ export default function PortalPage() {
           <section className="mt-6 text-sm text-slate-600">
             <p>Enterprise and Auditor dashboards are under the portal MVP. Use the lookup to verify attestations.</p>
           </section>
-        </section>
+        </main>
 
-
-        <footer className="max-w-4xl mx-auto py-6 px-4 text-xs text-slate-500">
-          GIAS — Global Interoperability & AI Standards Institute
-        </footer>
       </div>
     )
   }
+
+  export default withProtectedRoute(PortalPage)

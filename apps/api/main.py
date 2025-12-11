@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
-from app.routers import auth, certification
+from app.routers import auth, certification, public_auth
 
 settings = get_settings()
 
@@ -25,6 +25,7 @@ app.add_middleware(
 # Include API routers
 app.include_router(auth.router)
 app.include_router(certification.router)
+app.include_router(public_auth.router)
 
 
 @app.get("/health")

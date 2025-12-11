@@ -4,7 +4,7 @@ export const middleware = withAuth({
   callbacks: {
     authorized: ({ token, req }) => {
       // Protected routes
-      const protectedRoutes = ['/dashboard', '/evidence', '/portal']
+      const protectedRoutes = ['/dashboard', '/evidence', '/portal', '/certification']
       const pathname = req.nextUrl.pathname
 
       // Check if route is protected
@@ -25,5 +25,5 @@ export const middleware = withAuth({
 })
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/evidence/:path*', '/portal/:path*'],
+  matcher: ['/dashboard/:path*', '/evidence/:path*', '/portal/:path*', '/certification/:path*'],
 }

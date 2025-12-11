@@ -52,7 +52,7 @@ export function ScoreRadar({ scores }: ScoreRadarProps) {
       <div className="flex gap-8">
         <div className="text-center">
           <div className={`text-5xl font-bold ${scores.overall_score >= 80 ? 'text-green-600' : scores.overall_score >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
-            {scores.overall_score.toFixed(1)}
+            {Number(scores.overall_score ?? 0).toFixed(1)}
           </div>
           <p className="mt-1 text-sm text-gray-600">Overall Score</p>
         </div>
@@ -80,7 +80,7 @@ export function ScoreRadar({ scores }: ScoreRadarProps) {
             fill="#3b82f6"
             fillOpacity={0.6}
           />
-          <Tooltip formatter={(value: any) => `${Number(value).toFixed(1)}`} />
+          <Tooltip formatter={(value: any) => `${Number(value ?? 0).toFixed(1)}`} />
         </RadarChart>
       </ResponsiveContainer>
 
