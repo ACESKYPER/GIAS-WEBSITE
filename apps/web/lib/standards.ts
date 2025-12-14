@@ -1,10 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
 
-const STANDARDS_DIR = path.join(process.cwd(), '..', '..', '..', 'standards');
+const STANDARDS_DIR = path.join(process.cwd(), 'standards');
 
 export type StandardMeta = {
   id: string;
@@ -34,15 +32,25 @@ export async function getStandard(slug: string) {
   if (!fs.existsSync(p)) throw new Error('Not found');
   const raw = fs.readFileSync(p, 'utf8');
   const m = matter(raw);
-  const processed = await remark().use(html).process(m.content);
-  let htmlStr = processed.toString();
-  // ensure headings have ids
-  htmlStr = htmlStr.replace(/<(h[1-3])>([\s\S]*?)<\/\1>/g, (m, tag, inner) => {
-    const text = inner.replace(/<[^>]+>/g, '');
-    const id = text.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    return `<${tag} id="${id}">${inner}</${tag}>`;
-  });
-  return { meta: m.data, content: htmlStr };
+  const markdown = m.content;
+  // extract headings up to level 3 for TOC
+  const headings: Array<{ level: number; text: string; id: string }> = [];
+  const slugify = (t: string) =>
+    t
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  const regex = /^(#{1,3})\s+(.*)$/gm;
+  let m2;
+  // eslint-disable-next-line no-cond-assign
+  while ((m2 = regex.exec(markdown)) !== null) {
+    const level = m2[1].length;
+    const text = m2[2].trim();
+    const id = slugify(text.replace(/<[^>]+>/g, ''));
+    headings.push({ level, text, id });
+  }
+  return { meta: m.data, content: markdown, headings };
 }
 
 export function getStandardJSON(slug: string) {

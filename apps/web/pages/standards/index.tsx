@@ -7,9 +7,15 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { standards } };
 };
 
+import Head from 'next/head';
+
 export default function StandardsIndex({ standards }: { standards: StandardMeta[] }) {
   return (
     <div className="max-w-5xl mx-auto py-12 px-4">
+      <Head>
+        <title>Standards – GIAS</title>
+        <meta name="description" content="GIAS official standards and stewardship documents." />
+      </Head>
       <h1 className="text-3xl font-bold mb-4">GIAS Standards</h1>
       <p className="text-sm text-gray-600 mb-6">Official GIAS standards and stewardship documents.</p>
       <ul className="space-y-3">
