@@ -26,6 +26,9 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(certification.router)
 app.include_router(public_auth.router)
+# Standards router
+from app.routers import standards
+app.include_router(standards.router)
 
 
 @app.get("/health")
