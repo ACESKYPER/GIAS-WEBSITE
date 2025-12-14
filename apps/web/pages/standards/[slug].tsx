@@ -3,21 +3,21 @@ import Head from 'next/head';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { listStandards, getStandard } from '../../lib/standards';
+import { getAllStandards, getStandardBySlug } from '../../lib/standards';
 import MetadataBanner from '../../components/MetadataBanner';
 import TOC from '../../components/TOC';
 import PDFDownloadButton from '../../components/PDFDownloadButton';
 import CommentSection from '../../components/CommentSection';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const standards = listStandards();
-  return { paths: standards.map((s) => ({ params: { slug: s.id } })), fallback: false };
+  const standards = getAllStandards();
+  return { paths: standards.map((s) => ({ params: { slug: s.slug } })), fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = String(params?.slug);
-  const s = await getStandard(slug);
-  return { props: { meta: s.meta, content: s.content, headings: s.headings, id: slug } };
+  const s = await getStandardBySlug(slug);
+  return { props: { meta: s.metadata, content: s.content, headings: s.headings, id: slug } };
 };
 
 export default function StandardPage({ meta, content, headings, id }: any) {

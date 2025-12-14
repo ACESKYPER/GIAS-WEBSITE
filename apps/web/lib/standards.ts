@@ -27,6 +27,31 @@ export function listStandards(): StandardMeta[] {
   });
 }
 
+export function getAllStandards() {
+  const files = fs.existsSync(STANDARDS_DIR) ? fs.readdirSync(STANDARDS_DIR).filter((f) => f.endsWith('.md')) : [];
+  return files.map((f) => {
+    const raw = fs.readFileSync(path.join(STANDARDS_DIR, f), 'utf8');
+    const m = matter(raw);
+    // title can be in frontmatter or derived from id
+    const title = m.data.title || m.data.id || f.replace('.md', '');
+    const slug = f.replace('.md', '');
+    const metadata = {
+      id: m.data.id || slug,
+      version: m.data.version,
+      status: m.data.status,
+      issuing_body: m.data.issuing_body,
+      publication_date: m.data.publication_date,
+      description: m.data.description,
+    };
+    return { slug, title, metadata };
+  });
+}
+
+export async function getStandardBySlug(slug: string) {
+  const s = await getStandard(slug);
+  return { content: s.content, metadata: s.meta, headings: s.headings };
+}
+
 export async function getStandard(slug: string) {
   const p = path.join(STANDARDS_DIR, `${slug}.md`);
   if (!fs.existsSync(p)) throw new Error('Not found');
