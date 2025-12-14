@@ -25,14 +25,6 @@
       "static/chunks/605-2951c4b2b60a4500.js",
       "static/chunks/app/layout-98a95108772caed8.js"
     ],
-    "/auth/error/page": [
-      "static/chunks/webpack-5af111f8bf2b2227.js",
-      "static/chunks/fd9d1056-81ecb66cf6af1b25.js",
-      "static/chunks/117-d3c631375ba8df17.js",
-      "static/chunks/main-app-9191510c7e284f36.js",
-      "static/chunks/972-e4ce8702370a3018.js",
-      "static/chunks/app/auth/error/page-496be891cc06eadc.js"
-    ],
     "/auth/signin/page": [
       "static/chunks/webpack-5af111f8bf2b2227.js",
       "static/chunks/fd9d1056-81ecb66cf6af1b25.js",
@@ -41,6 +33,14 @@
       "static/chunks/972-e4ce8702370a3018.js",
       "static/chunks/605-2951c4b2b60a4500.js",
       "static/chunks/app/auth/signin/page-5ba225ed6d41c146.js"
+    ],
+    "/auth/error/page": [
+      "static/chunks/webpack-5af111f8bf2b2227.js",
+      "static/chunks/fd9d1056-81ecb66cf6af1b25.js",
+      "static/chunks/117-d3c631375ba8df17.js",
+      "static/chunks/main-app-9191510c7e284f36.js",
+      "static/chunks/972-e4ce8702370a3018.js",
+      "static/chunks/app/auth/error/page-496be891cc06eadc.js"
     ],
     "/auth/unauthorized/page": [
       "static/chunks/webpack-5af111f8bf2b2227.js",
@@ -85,6 +85,14 @@
       "static/chunks/main-app-9191510c7e284f36.js",
       "static/chunks/app/legal/page-20eb74b7bf548290.js"
     ],
+    "/portal/page": [
+      "static/chunks/webpack-5af111f8bf2b2227.js",
+      "static/chunks/fd9d1056-81ecb66cf6af1b25.js",
+      "static/chunks/117-d3c631375ba8df17.js",
+      "static/chunks/main-app-9191510c7e284f36.js",
+      "static/chunks/605-2951c4b2b60a4500.js",
+      "static/chunks/app/portal/page-6fd1d35e8c9396f2.js"
+    ],
     "/page": [
       "static/chunks/webpack-5af111f8bf2b2227.js",
       "static/chunks/fd9d1056-81ecb66cf6af1b25.js",
@@ -100,14 +108,6 @@
       "static/chunks/main-app-9191510c7e284f36.js",
       "static/chunks/972-e4ce8702370a3018.js",
       "static/chunks/app/portal/login/page-4ae7932ec2553cfc.js"
-    ],
-    "/portal/page": [
-      "static/chunks/webpack-5af111f8bf2b2227.js",
-      "static/chunks/fd9d1056-81ecb66cf6af1b25.js",
-      "static/chunks/117-d3c631375ba8df17.js",
-      "static/chunks/main-app-9191510c7e284f36.js",
-      "static/chunks/605-2951c4b2b60a4500.js",
-      "static/chunks/app/portal/page-6fd1d35e8c9396f2.js"
     ],
     "/unauthorized/page": [
       "static/chunks/webpack-5af111f8bf2b2227.js",

@@ -26,6 +26,26 @@ export default function StandardPage({ meta, content, headings, id }: any) {
       <Head>
         <title>{meta.title || id} – GIAS</title>
         {meta.description && <meta name="description" content={meta.description} />}
+        {/* OpenGraph / Twitter */}
+        <meta property="og:title" content={`${meta.title || id} – GIAS`} />
+        {meta.description && <meta property="og:description" content={meta.description} />}
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary" />
+        {meta.description && <meta name="twitter:description" content={meta.description} />}
+        {/* JSON-LD basic schema for the standard */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'TechArticle',
+            'headline': meta.title || id,
+            'identifier': meta.id || id,
+            'datePublished': meta.publication_date || undefined,
+            'publisher': { '@type': 'Organization', 'name': meta.issuing_body || 'GIAS' },
+            'version': meta.version || undefined,
+            'description': meta.description || undefined,
+          }) }}
+        />
       </Head>
       <MetadataBanner meta={meta} />
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

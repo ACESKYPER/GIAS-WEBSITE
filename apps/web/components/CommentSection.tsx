@@ -32,7 +32,8 @@ export default function CommentSection({ id }: { id: string }) {
       setName("");
       setEmail("");
       setText("");
-      const updated = await fetch(`${base}/standards/${id}/comments`).then((r) => r.json());
+      // Fetch updated comments from the API route
+      const updated = await fetch(`/api/standards/${id}/comments`).then((r) => r.json());
       setComments(updated);
     }
   }
