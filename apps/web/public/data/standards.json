@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "GIAS-AIS-001",
+    "description": "Artificial Intelligence Safety Standards.",
+    "last_updated": "2025-12-01T12:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "GIAS-CAF-001",
+    "description": "Certification and Accreditation Framework.",
+    "last_updated": "2025-11-15T12:00:00Z"
+  },
+  {
+    "id": "3",
+    "title": "GIAS-GOV-CHARTER",
+    "description": "Governance and Stewardship Charter.",
+    "last_updated": "2025-10-20T12:00:00Z"
+  }
+]

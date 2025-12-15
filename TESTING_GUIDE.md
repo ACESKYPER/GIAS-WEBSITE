@@ -54,7 +54,6 @@ Go to: **http://localhost:3000**
 
 You'll see:
 - ✅ Home page with 5-pillar overview
-- ✅ Standards page (MIF, DSP, TL, RTE, POL)
 - ✅ Governance page
 - ✅ Attestation Explorer
 - ✅ Legal pages
@@ -212,13 +211,6 @@ Email: auditor@gias.local
 Password: AuditorPass123!
 Role: auditor
 ```
-
-### Sample Standards (Auto-loaded)
-- **MIF** - Model Interoperability Framework
-- **DSP** - Data & Safety Protocols
-- **TL** - Transparency & Logging
-- **RTE** - Risk & Testing Execution
-- **POL** - Policy & Oversight
 
 ### Sample Attestations
 - GIAS-2025-001234 (Acme AI Labs)

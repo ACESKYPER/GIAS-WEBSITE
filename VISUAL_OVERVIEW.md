@@ -33,7 +33,6 @@
 │                                                         │
 │  Pages:                                                │
 │  ✅ Home (5-pillar overview)                          │
-│  ✅ Standards (MIF, DSP, TL, RTE, POL)              │
 │  ✅ Governance & Council                              │
 │  ✅ Attestation Explorer                              │
 │  ✅ Legal & Compliance                                │
@@ -203,7 +202,6 @@ Type Coverage: 100% (TypeScript strict)
 
 Components:
   • Home page with hero section
-  • Standards marketplace (5 specs)
   • Governance information
   • Attestation explorer
   • QR verification

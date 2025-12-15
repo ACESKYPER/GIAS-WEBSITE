@@ -17,7 +17,6 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex gap-8 text-slate-700">
-          <Link href="/standards" className="hover:text-slate-900 transition">Standards</Link>
           <Link href="/certification" className="hover:text-slate-900 transition">Certification</Link>
           <Link href="/governance" className="hover:text-slate-900 transition">Governance</Link>
           <Link href="/explorer" className="hover:text-slate-900 transition">Explorer</Link>
@@ -47,8 +46,7 @@ export default function Header() {
 
       {/* Mobile menu */}
       <div className={`md:hidden overflow-hidden transition-[max-height] duration-300 ${open ? 'max-h-96' : 'max-h-0'}`}>
-        <div className="px-4 pb-4 space-y-2">
-          <Link href="/standards" className="block py-2">Standards</Link>
+          <div className="px-4 pb-4 space-y-2">
           <Link href="/certification" className="block py-2">Certification</Link>
           <Link href="/governance" className="block py-2">Governance</Link>
           <Link href="/explorer" className="block py-2">Explorer</Link>

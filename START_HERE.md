@@ -128,7 +128,6 @@ You should see:
 - ✅ Navigation menu
 
 **Try clicking around** and test:
-- Standards page
 - Governance page
 - Attestation Explorer
 - Legal pages
@@ -281,7 +280,6 @@ ipconfig getifaddr en0
 ┌─────────────────────────────────────────────────────────┐
 │              NEXT.JS APPLICATION                        │
 │   - Home page                                           │
-│   - Standards listing                                   │
 │   - Attestation explorer                               │
 │   - Responsive design                                  │
 └─────────────────────────────────────────────────────────┘
@@ -317,7 +315,6 @@ Before you say "it's working!", verify:
 - [ ] Can register a user
 - [ ] Can login and get token
 - [ ] Can call /me endpoint with token
-- [ ] Standards page shows 5 standards
 - [ ] Explorer page loads
 - [ ] No console errors in browser
 

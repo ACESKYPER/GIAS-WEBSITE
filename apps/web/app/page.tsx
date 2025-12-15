@@ -12,7 +12,6 @@ export default function Home() {
               GIAS provides institutional governance, standards, and certification frameworks for AI systems operating across borders. Our five-pillar methodology ensures alignment, robustness, data governance, explainability, and operational risk mitigation.
             </p>
             <div className="flex gap-4">
-              <Link href="/standards" className="btn-primary inline-block">Explore Standards</Link>
               <Link href="/governance" className="btn-secondary inline-block">Learn More</Link>
             </div>
           </div>
