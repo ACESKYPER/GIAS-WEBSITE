@@ -1,17 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/auth/error/page": "app/auth/error/page.js",
-  "/auth/signin/page": "app/auth/signin/page.js",
-  "/auth/unauthorized/page": "app/auth/unauthorized/page.js",
-  "/certification/page": "app/certification/page.js",
-  "/evidence/page": "app/evidence/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/legal/page": "app/legal/page.js",
-  "/portal/page": "app/portal/page.js",
   "/page": "app/page.js",
-  "/portal/login/page": "app/portal/login/page.js",
-  "/unauthorized/page": "app/unauthorized/page.js",
-  "/explorer/page": "app/explorer/page.js",
-  "/governance/page": "app/governance/page.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/auth/signin/page": "app/auth/signin/page.js",
+  "/governance/page": "app/governance/page.js",
+  "/explorer/page": "app/explorer/page.js"
 }

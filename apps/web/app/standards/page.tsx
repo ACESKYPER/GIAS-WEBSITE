@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import CommentSection from "@/components/CommentSection";
+import DownloadButtons from "@/components/DownloadButtons";
 
 export default function StandardsPage() {
   const [standards, setStandards] = useState([]);
@@ -27,12 +29,11 @@ export default function StandardsPage() {
   );
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-2">GIAS Standards</h1>
-      <p className="text-gray-600 mb-6">
-        Official GIAS standards and stewardship documents.
-      </p>
+    <div className="p-6 max-w-4xl mx-auto space-y-8">
+      {/* Header */}
+      <h1 className="text-3xl font-bold text-center mb-4">GIAS Standards</h1>
 
+      {/* Search Input */}
       <input
         type="text"
         placeholder="Search standards..."
@@ -41,6 +42,7 @@ export default function StandardsPage() {
         className="w-full p-2 border rounded mb-4"
       />
 
+      {/* Standards List */}
       {filteredStandards.length === 0 ? (
         <p className="text-gray-500">No standards available.</p>
       ) : (
@@ -53,12 +55,19 @@ export default function StandardsPage() {
               <h2 className="text-xl font-semibold mb-1">{standard.title}</h2>
               <p className="text-gray-600 mb-2">{standard.description}</p>
               <p className="text-sm text-gray-500">
-                Last updated: {new Date(standard.last_updated).toLocaleDateString()}
+                Last updated:{" "}
+                {new Date(standard.last_updated).toLocaleDateString()}
               </p>
             </div>
           ))}
         </div>
       )}
+
+      {/* Comment Section */}
+      <CommentSection id="gias-standards" />
+
+      {/* Download Buttons */}
+      <DownloadButtons id="gias-standards" />
     </div>
   );
 }
