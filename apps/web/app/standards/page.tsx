@@ -1,73 +1,47 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CommentSection from "@/components/CommentSection";
-import DownloadButtons from "@/components/DownloadButtons";
+import standardsData from "@/data/standards.json";
+
+interface Standard {
+  id: string;
+  title: string;
+  description: string;
+  last_updated: string;
+}
 
 export default function StandardsPage() {
-  const [standards, setStandards] = useState([]);
-  const [search, setSearch] = useState("");
+  const [standards, setStandards] = useState<Standard[]>([]);
 
   useEffect(() => {
-    const fetchStandards = async () => {
-      try {
-        const response = await fetch("/data/standards.json");
-        if (!response.ok) throw new Error("Failed to fetch standards.");
-        const data = await response.json();
-        setStandards(data);
-      } catch (error) {
-        console.error(error);
-        setStandards([]);
-      }
-    };
-
-    fetchStandards();
+    // Simulate fetching standards from an API or local JSON
+    setStandards(standardsData);
   }, []);
 
-  const filteredStandards = standards.filter((standard) =>
-    standard.title.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-8">
-      {/* Header */}
-      <h1 className="text-3xl font-bold text-center mb-4">GIAS Standards</h1>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-semibold mb-6 text-slate-800">GIAS maintains a limited set of AI interoperability and trust standards currently under institutional review.</h1>
 
-      {/* Search Input */}
-      <input
-        type="text"
-        placeholder="Search standards..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-full p-2 border rounded mb-4"
-      />
+      <div className="grid gap-4 mb-8">
+        {standards.map((standard) => (
+          <div
+            key={standard.id}
+            className="p-4 border border-slate-200 rounded hover:shadow-md transition"
+          >
+            <h2 className="text-lg font-semibold text-slate-900">{standard.title}</h2>
+            <p className="text-slate-600 text-sm">— Scope restricted (Institutional review draft)</p>
+          </div>
+        ))}
+      </div>
 
-      {/* Standards List */}
-      {filteredStandards.length === 0 ? (
-        <p className="text-gray-500">No standards available.</p>
-      ) : (
-        <div className="space-y-4">
-          {filteredStandards.map((standard) => (
-            <div
-              key={standard.id}
-              className="p-4 border rounded shadow-sm hover:shadow-md transition"
-            >
-              <h2 className="text-xl font-semibold mb-1">{standard.title}</h2>
-              <p className="text-gray-600 mb-2">{standard.description}</p>
-              <p className="text-sm text-gray-500">
-                Last updated:{" "}
-                {new Date(standard.last_updated).toLocaleDateString()}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Comment Section */}
-      <CommentSection id="gias-standards" />
-
-      {/* Download Buttons */}
-      <DownloadButtons id="gias-standards" />
+      <div className="flex justify-center">
+        <button
+          onClick={() => window.location.href = "/access-request"}
+          className="px-6 py-3 bg-slate-900 text-white rounded font-semibold hover:bg-slate-800 transition"
+        >
+          Request Institutional Access
+        </button>
+      </div>
     </div>
   );
 }
